@@ -1,0 +1,41 @@
+[ 처음엔 키로 parameter 구하기 ] 
+
+0 calibration	:	체커보드 or 클릭으로 파라메터 구하기 
+
+evaluate_motchallenge ㄴ
+generate_result_frams ㄴ
+
+---------
+1 generate_viedeos 실행 (원하는 ID 구함) > show_results에서 (발위치 따옴) deep_sort_app 실행
+1 show_results		> deep_sort_app 
+1 deep_sort_app	:	[tracking]
+			sh에서 원하는 영상 선택
+			처음에 찾는 ID 없음으로 ID = 0 만들어 video는 all로 저장 (모두 트레킹)
+			원하는 ID입력하면 ID가 y값이 화면밖으로 안나가는 부분부터 트래킹해서 그래프얻고, 
+			foot display : y로 video는 ID%s로 저장
+			해당 ID 발부분 10구간 그래프 위치 알아내기 위해 video foot 10으로 저장
+			result/text/에 ID h 저장 (MOT실험)
+
+	python deep_sort_app.py \
+	    --sequence_dir=./data/MOT16/train/MOT16-02 \
+	    --detection_file=./resources/detections/MOT16_POI_train/MOT16-02.npy \
+	    --output_file=./result/text/MOT16-02.txt \
+	    --min_confidence=0.3 \
+	    --nn_budget=100 \
+	    --display=True
+
+1 velocity ㄴ	:	(GTA적용) 파라미터 알고있을 때 K,R가지고 ID 속도 구하기  << self_parameters
+
+----------
+2 calibration_self:	hough로 edge line중에 두개씩 골라서 vp 구함 (수동)
+
+
+----------
+neurvps에서 vp구하고
+
+3 self_parameters	:	vp로 parameter 구함 // img의 길이 두개로 test
+3 deep_sort_another:	self_parameters에서 KRt구하고 여기서 ID의 속도 구하고 속도기반으로 다음 카메라까지의 거리 구함 
+
+
+
+
